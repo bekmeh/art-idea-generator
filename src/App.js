@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import './App.css';
+import { DragDropContext } from 'react-beautiful-dnd';
 import ChosenWords from './components/ChosenWords';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
 import {wordsData} from './data/wordsData.js';
+import './App.css';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectedWords: [] };
+    this.state = { selectedWords: [], draggedWord: null };
   }
 
   onClickWord = (word) => {
@@ -20,10 +21,31 @@ class App extends Component {
       this.setState({ selectedWords: newSelectedWords });
     } else {
       // add word
-      var newSelectedWords = this.state.selectedWords;
+      var newSelectedWords = Array.from(this.state.selectedWords);
       newSelectedWords.push(word);
       this.setState({ selectedWords: newSelectedWords });
     }
+  }
+
+  onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (destination.index === source.index) {
+      // no change
+      return;
+    }
+
+    const newSelectedWords = Array.from(this.state.selectedWords);
+    // remove 1 at source index
+    newSelectedWords.splice(source.index, 1)
+    // add dragged word at destination index
+    newSelectedWords.splice(destination.index, 0, draggableId)
+
+    this.setState({ selectedWords: newSelectedWords });
   }
 
   render() {
@@ -35,7 +57,9 @@ class App extends Component {
         <section className="text-gray-600 body-font">
           <div className="container px-40 py-24 mx-auto">
             <div className="text-center mb-10">
-              <ChosenWords selectedWords={this.state.selectedWords} />
+              <DragDropContext onDragEnd={this.onDragEnd} >
+                <ChosenWords selectedWords={this.state.selectedWords} />
+              </DragDropContext>
               <ChangeNumWordsButton diff="-1"/>
               <ChooseRandomWordsButton numWords="3"/>
               <ChangeNumWordsButton diff="1"/>
@@ -46,7 +70,7 @@ class App extends Component {
                 You can also manually choose any number of words and rearrange them.
               </p>
             </div>
-            <div className="container flex flex-wrap m-4 mx-auto text-center items-center">
+            <div className="container flex flex-wrap m-4 mx-auto text-center items-center justify-center">
               { 
                 Object.keys(wordsData).map((category) => {
                   return <Category key={`category-${category}`} category={category} words={wordsData[category]} onClickWord={this.onClickWord} selectedWords={this.state.selectedWords}/>

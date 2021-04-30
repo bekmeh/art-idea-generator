@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import ChosenWord from './components/ChosenWord';
+import ChosenWords from './components/ChosenWords';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
@@ -17,12 +17,12 @@ class App extends Component {
     if (this.state.selectedWords.includes(word)) {
       // remove word
       const newSelectedWords = this.state.selectedWords.filter((selectedWord) => selectedWord !== word);
-      this.setState({ selectedWords: newSelectedWords }, () => console.log(this.state.selectedWords));
+      this.setState({ selectedWords: newSelectedWords });
     } else {
       // add word
       var newSelectedWords = this.state.selectedWords;
       newSelectedWords.push(word);
-      this.setState({ selectedWords: newSelectedWords }, () => console.log(this.state.selectedWords));
+      this.setState({ selectedWords: newSelectedWords });
     }
   }
 
@@ -35,16 +35,7 @@ class App extends Component {
         <section className="text-gray-600 body-font">
           <div className="container px-40 py-24 mx-auto">
             <div className="text-center mb-10">
-              <div className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4 h-10">
-                {
-                  this.state.selectedWords.length === 0 ? <p className="text-base leading-relaxed text-gray-600 pt-4">Please choose some words</p> : null
-                }
-                { 
-                  this.state.selectedWords.map((selectedWord) => {
-                    return <ChosenWord key={`chosen=${selectedWord}`} word={selectedWord}/>
-                  })
-                }
-              </div>
+              <ChosenWords selectedWords={this.state.selectedWords} />
               <ChangeNumWordsButton diff="-1"/>
               <ChooseRandomWordsButton numWords="3"/>
               <ChangeNumWordsButton diff="1"/>

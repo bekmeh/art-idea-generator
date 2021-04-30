@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import IdeaWord from './IdeaWord';
 
 class Category extends Component {
-
-  // constructor(props) {
-  //   super(props);
-  // }
   
   render() {
     const { category, words } = this.props;

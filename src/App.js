@@ -4,12 +4,29 @@ import ChosenWord from './components/ChosenWord';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
-import {words} from './data/words.js';
+import {wordsData} from './data/wordsData.js';
 
 class App extends Component {
-  render() {
-    console.log(words);
 
+  constructor(props) {
+    super(props);
+    this.state = { selectedWords: [] };
+  }
+
+  onClickWord = (word) => {
+    if (this.state.selectedWords.includes(word)) {
+      // remove word
+      const newSelectedWords = this.state.selectedWords.filter((selectedWord) => selectedWord !== word);
+      this.setState({ selectedWords: newSelectedWords }, () => console.log(this.state.selectedWords));
+    } else {
+      // add word
+      var newSelectedWords = this.state.selectedWords;
+      newSelectedWords.push(word);
+      this.setState({ selectedWords: newSelectedWords }, () => console.log(this.state.selectedWords));
+    }
+  }
+
+  render() {
     return (
       <div className="App">
         <div className="h-full bg-indigo-100 p-8">
@@ -18,10 +35,15 @@ class App extends Component {
         <section className="text-gray-600 body-font">
           <div className="container px-40 py-24 mx-auto">
             <div className="text-center mb-10">
-              <div className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                <ChosenWord word="Draggable"/>
-                <ChosenWord word="Words"/>
-                <ChosenWord word="Here"/>
+              <div className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4 h-10">
+                {
+                  this.state.selectedWords.length === 0 ? <p className="text-base leading-relaxed text-gray-600 pt-4">Please choose some words</p> : null
+                }
+                { 
+                  this.state.selectedWords.map((selectedWord) => {
+                    return <ChosenWord key={`chosen=${selectedWord}`} word={selectedWord}/>
+                  })
+                }
               </div>
               <ChangeNumWordsButton diff="-1"/>
               <ChooseRandomWordsButton numWords="3"/>
@@ -34,10 +56,11 @@ class App extends Component {
               </p>
             </div>
             <div className="container flex flex-wrap m-4 mx-auto text-center items-center">
-              <Category category="Space"/>
-              <Category category="Magic"/>
-              <Category category="Animals"/>
-              <Category category="Places"/>
+              { 
+                Object.keys(wordsData).map((category) => {
+                  return <Category key={`category-${category}`} category={category} words={wordsData[category]} onClickWord={this.onClickWord} selectedWords={this.state.selectedWords}/>
+                }) 
+              }
             </div>
           </div>
         </section>

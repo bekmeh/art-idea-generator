@@ -12,7 +12,7 @@ class ChosenWords extends Component {
         { (provided) => (
           <div ref={provided.innerRef}
               {...provided.droppableProps}
-              className="flex flex-auto flex-row justify-center sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4 mt-16 h-10"
+              className="flex flex-auto flex-row flex-wrap gap-y-4 justify-center sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4 mt-16 h-full"
           >
             {
               selectedWords.length === 0

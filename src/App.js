@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import ChosenWords from './components/ChosenWords';
 import RemoveWordArea from './components/RemoveWordArea';
-import HelpText from './components/HelpText';
+import Tooltip from './components/Tooltip';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
@@ -124,17 +124,15 @@ class App extends Component {
               <ChangeNumWordsButton diff={-1} changeNumWords={this.changeNumWords}/>
               <ChooseRandomWordsButton numWords={this.state.numWords} onClick={this.chooseRandomWords}/>
               <ChangeNumWordsButton diff={1} changeNumWords={this.changeNumWords}/>
+              <Tooltip direction="right" content="Choose the number of words you'd like, and press the button to randomly choose. You can also manually choose words, rearrange and delete them">
+                <svg xmlns="http://www.w3.org/2000/svg" className="inline h-7 w-7" viewBox="0 0 20 20" fill="rgb(143, 161, 234)">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                </svg>
+              </Tooltip>
               <div className="text-base leading-relaxed text-gray-400 pt-4" onClick={this.clearWords}>
-                <button className="select-none focus:outline-none">Clear all</button>
+                <button className="select-none focus:outline-none">Clear selected</button>
               </div>
             </div>
-            {/* <div className="text-center mb-10">
-              <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
-                <b>Choose the number of words</b> you'd like above, and press the button to randomly choose. <br/>
-                You can also: <ul><li>manually choose words</li><li>rearrange words</li><li>drag words into the bin</li></ul>
-              </p>
-            </div> */}
-            <HelpText />
             <div className="text-base leading-relaxed text-gray-400">
               <button className="select-none focus:outline-none px-2" onClick={this.collapseCategories}>Collapse all</button>
               <button className="select-none focus:outline-none px-2" onClick={this.expandCategories}>Expand all</button>

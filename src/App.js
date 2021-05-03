@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import ChosenWords from './components/ChosenWords';
 import RemoveWordArea from './components/RemoveWordArea';
-import Tooltip from './components/Tooltip';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
@@ -115,37 +114,46 @@ class App extends Component {
           <h1 className="text-indigo-900 title-font text-2xl">Art Idea Generator</h1>
         </div>
         <section className="text-gray-600 body-font">
-          <div className="container px-10 py-24 mx-auto">
+          <div className="container md:px-32 sm:px-10 px-2 pb-24 mx-auto">
             <div className="text-center mb-5">
               <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd} >
                 <ChosenWords selectedWords={this.state.selectedWords} />
                 <RemoveWordArea isDragging={this.state.isDragging}/>
               </DragDropContext>
               <div className="flex flex-row flex-auto space-around align-center justify-center">
-                <div className="w-7">
-                </div>
                 <div>
-                  <div className="flex flex-auto flex-row space-around">
+                  <div className="flex flex-auto flex-row content-center">
                     <ChangeNumWordsButton diff={-1} changeNumWords={this.changeNumWords}/>
                     <ChooseRandomWordsButton numWords={this.state.numWords} onClick={this.chooseRandomWords}/>
                     <ChangeNumWordsButton diff={1} changeNumWords={this.changeNumWords}/>
                   </div>
                 </div>
-                <div>
-                  <Tooltip direction="right" content="Choose the number of words you'd like, and press the button to randomly choose. You can also manually choose words, rearrange and delete them">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="inline h-7 w-7" viewBox="0 0 20 20" fill="rgb(143, 161, 234)">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                    </svg>
-                  </Tooltip>
-                </div>
               </div>
-              <div className="text-base leading-relaxed text-gray-400 pt-4" onClick={this.clearWords}>
-                <button className="select-none focus:outline-none">Clear selected</button>
+              <div className="flex flex-row justify-center content-center text-base text-center leading-relaxed text-gray-400 pt-4" onClick={this.clearWords}>
+                <button className="flex flex-row border border-indigo-100 rounded-xl p-1 select-none focus:outline-none hover:bg-indigo-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 pl-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <p className="px-2">Clear</p>
+                </button>
+              </div>
+              <div className="border-double border-4 border-indigo-200 rounded-md p-3 mt-6 lg:mx-64 sm:mx-24 mx-12">
+                <p className="">Choose the number of words you'd like, and press the button to randomly choose. You can also manually choose words, rearrange and delete them</p>
               </div>
             </div>
-            <div className="text-base leading-relaxed text-gray-400">
-              <button className="select-none focus:outline-none px-2" onClick={this.collapseCategories}>Collapse all</button>
-              <button className="select-none focus:outline-none px-2" onClick={this.expandCategories}>Expand all</button>
+            <div className="flex flex-row justify-center content-center text-base leading-relaxed text-gray-400">
+              <button className="flex flex-row border border-indigo-100 rounded-xl p-1 select-none focus:outline-none hover:bg-indigo-50 px-2 mx-2" onClick={this.collapseCategories}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4.293 15.707a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 0zm0-6a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 5.414 5.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                <p className="px-2">Collapse all</p>
+              </button>
+              <button className="flex flex-row border border-indigo-100 rounded-xl p-1 select-none focus:outline-none hover:bg-indigo-50 px-2 mx-2" onClick={this.expandCategories}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M15.707 4.293a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 0zm0 6a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L10 14.586l4.293-4.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <p className="px-2">Expand all</p>
+              </button>
             </div>
             <div className="container flex flex-wrap m-4 mx-auto text-center items-left justify-left">
               { 

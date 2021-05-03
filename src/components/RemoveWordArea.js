@@ -9,7 +9,7 @@ class RemoveWordArea extends Component {
         { (provided) => (
           <div ref={provided.innerRef}
                {...provided.droppableProps}
-               className={`flex flex-row justify-center rounded-full mx-auto h-10 w-10 text-gray-400`}
+               className={`flex flex-row justify-center rounded-full mx-auto h-10 w-10 my-4 text-gray-400`}
           >
             <p className="text-base leading-relaxed">
               { this.props.isDragging

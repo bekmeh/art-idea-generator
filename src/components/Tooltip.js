@@ -23,18 +23,18 @@ class Tooltip extends Component {
   render() {
     return (
       <div
-        className="flex pt-12 align-middle text-center"
+        className="flex align-middle text-center"
         onMouseEnter={this.show}
         onMouseLeave={this.hide}
       >
         {this.props.children}
         
         {this.state.active && (
-          <div className={`absolute rounded-md left-1/2 p-1 m-3 w-64 bg-indigo-200 zIndex-10 top-1/2 left-7 transform -translate-y-1/2
+          <div className={`absolute rounded-md left-1/2 p-1 m-3 w-64 bg-indigo-200 zIndex-10 transform 
               ${this.props.direction === "top" ? "top-10" : 
                 this.props.direction === "bottom" ? "bottom-10" :
                 this.props.direction === "left" ? "top-1/2 right-10" :
-                this.props.direction === "right" ? "ml-5 top-1/2 left-10" : "" }}`}>
+                this.props.direction === "right" ? "translate-y-8 -translate-x-36 sm:translate-y-1/2 sm:-translate-x-1/2" : ""}`}>
             {this.props.content}
           </div>
         )}

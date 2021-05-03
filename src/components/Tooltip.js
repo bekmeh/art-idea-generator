@@ -23,7 +23,7 @@ class Tooltip extends Component {
   render() {
     return (
       <div
-        className="inline-block relative text-center"
+        className="flex pt-12 align-middle text-center"
         onMouseEnter={this.show}
         onMouseLeave={this.hide}
       >

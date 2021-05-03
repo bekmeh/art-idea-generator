@@ -20,7 +20,11 @@ class ChosenWord extends Component {
                               select-none
                               py-1 px-2 mx-2 rounded
                               text-2xl font-medium tracking-widest transition-none
-                              ${ snapshot.isDragging? 'bg-indigo-300 text-indigo-800' : 'bg-indigo-50 text-indigo-500'}`}>
+                              ${ snapshot.draggingOver === 'delete-area'
+                                ? 'bg-red-300 text-red-800'
+                                : snapshot.isDragging
+                                  ? 'bg-indigo-300 text-indigo-800'
+                                  : 'bg-indigo-50 text-indigo-500' }`}>
               { word }
             </span>
           </div>

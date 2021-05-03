@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import ChosenWords from './components/ChosenWords';
+import RemoveWordArea from './components/RemoveWordArea';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
@@ -11,7 +12,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectedWords: [], draggedWord: null };
+    this.state = { selectedWords: [], isDragging: false };
   }
 
   onClickWord = (word) => {
@@ -27,6 +28,10 @@ class App extends Component {
     }
   }
 
+  onDragStart = () => {
+    this.setState({ isDragging: true });
+  }
+
   onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
 
@@ -34,18 +39,27 @@ class App extends Component {
       return;
     }
 
-    if (destination.index === source.index) {
+    if (destination.droppableId == 'delete-area') {
+      // delete word
+      const newSelectedWords = Array.from(this.state.selectedWords);
+      newSelectedWords.splice(source.index, 1);
+      this.setState({ selectedWords: newSelectedWords, isDragging: false });
+      return;
+    }
+
+    if (destination.droppablId == source.droppablId && destination.index === source.index) {
       // no change
+      this.setState({ isDragging: false });
       return;
     }
 
     const newSelectedWords = Array.from(this.state.selectedWords);
     // remove 1 at source index
-    newSelectedWords.splice(source.index, 1)
+    newSelectedWords.splice(source.index, 1);
     // add dragged word at destination index
-    newSelectedWords.splice(destination.index, 0, draggableId)
+    newSelectedWords.splice(destination.index, 0, draggableId);
 
-    this.setState({ selectedWords: newSelectedWords });
+    this.setState({ selectedWords: newSelectedWords, isDragging: false });
   }
 
   render() {
@@ -57,8 +71,9 @@ class App extends Component {
         <section className="text-gray-600 body-font">
           <div className="container px-40 py-24 mx-auto">
             <div className="text-center mb-10">
-              <DragDropContext onDragEnd={this.onDragEnd} >
+              <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd} >
                 <ChosenWords selectedWords={this.state.selectedWords} />
+                <RemoveWordArea isDragging={this.state.isDragging}/>
               </DragDropContext>
               <ChangeNumWordsButton diff="-1"/>
               <ChooseRandomWordsButton numWords="3"/>

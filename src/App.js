@@ -5,14 +5,47 @@ import RemoveWordArea from './components/RemoveWordArea';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
-import {wordsData} from './data/wordsData.js';
+import { wordsData } from './data/wordsData.js';
 import './App.css';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectedWords: [], isDragging: false };
+    this.state = { selectedWords: [], isDragging: false, numWords: 3 };
+  }
+
+  changeNumWords = (diff) => {
+    var totalNumWords = 0;
+    Object.keys(wordsData).forEach(category => totalNumWords = totalNumWords + wordsData[category].length);
+
+    if ((this.state.numWords === 1 && diff < 0)
+        || (this.state.numWords === totalNumWords && diff > 0)
+        || (this.state.numWords === 10 && diff > 0)) {
+      return;
+    }
+
+    const newNumWords = this.state.numWords + diff;
+    this.setState({ numWords: newNumWords });
+  }
+
+  getRandomWord = () => {
+    const categories = Object.keys(wordsData);
+    const randomCategory = wordsData[categories[Math.floor(Math.random() * categories.length)]]
+    return randomCategory[Math.floor(Math.random() * randomCategory.length)];
+  }
+
+  chooseRandomWords = () => {
+    var chosenWords = [];
+
+    while (chosenWords.length < this.state.numWords) {
+      const randomWord = this.getRandomWord();
+      if (!chosenWords.includes(randomWord)) {
+        chosenWords.push(randomWord);
+      }
+    }
+
+    this.setState({ selectedWords: chosenWords });
   }
 
   onClickWord = (word) => {
@@ -39,7 +72,7 @@ class App extends Component {
       return;
     }
 
-    if (destination.droppableId == 'delete-area') {
+    if (destination.droppableId === 'delete-area') {
       // delete word
       const newSelectedWords = Array.from(this.state.selectedWords);
       newSelectedWords.splice(source.index, 1);
@@ -47,7 +80,7 @@ class App extends Component {
       return;
     }
 
-    if (destination.droppablId == source.droppablId && destination.index === source.index) {
+    if (destination.droppablId === source.droppablId && destination.index === source.index) {
       // no change
       this.setState({ isDragging: false });
       return;
@@ -75,9 +108,9 @@ class App extends Component {
                 <ChosenWords selectedWords={this.state.selectedWords} />
                 <RemoveWordArea isDragging={this.state.isDragging}/>
               </DragDropContext>
-              <ChangeNumWordsButton diff="-1"/>
-              <ChooseRandomWordsButton numWords="3"/>
-              <ChangeNumWordsButton diff="1"/>
+              <ChangeNumWordsButton diff={-1} changeNumWords={this.changeNumWords}/>
+              <ChooseRandomWordsButton numWords={this.state.numWords} onClick={this.chooseRandomWords}/>
+              <ChangeNumWordsButton diff={1} changeNumWords={this.changeNumWords}/>
             </div>
             <div className="text-center">
               <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">

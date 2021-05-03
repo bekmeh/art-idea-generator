@@ -8,9 +8,9 @@ class ChangeNumWordsButton extends Component {
 
     var label = "";
 
-    if (diff === "1"){
+    if (diff === 1) {
       label = "+";
-    } else if (diff === "-1") {
+    } else if (diff === -1) {
       label = "-";
     }
 
@@ -20,7 +20,7 @@ class ChangeNumWordsButton extends Component {
                      border-0 py-2 px-4
                      focus:outline-none hover:bg-indigo-400
                      rounded text-xs
-                     inline-flex items-center justify-center">
+                     inline-flex items-center justify-center" onClick={() => this.props.changeNumWords(diff)}>
          { label }
       </button>
     );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import ChosenWords from './components/ChosenWords';
 import RemoveWordArea from './components/RemoveWordArea';
+import HelpText from './components/HelpText';
 import ChangeNumWordsButton from './components/ChangeNumWordsButton';
 import ChooseRandomWordsButton from './components/ChooseRandomWordsButton';
 import Category from './components/Category';
@@ -12,7 +13,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selectedWords: [], isDragging: false, numWords: 3 };
+    this.state = { selectedWords: [], isDragging: false, numWords: 3, categoriesCollapsed: false, categoriesExpanded: false };
   }
 
   changeNumWords = (diff) => {
@@ -46,6 +47,18 @@ class App extends Component {
     }
 
     this.setState({ selectedWords: chosenWords });
+  }
+
+  clearWords = () => {
+    this.setState({ selectedWords: [] });
+  }
+
+  collapseCategories = () => {
+    this.setState({ categoriesCollapsed: true }, () => { this.setState({ categoriesCollapsed: false })});
+  }
+
+  expandCategories = () => {
+    this.setState({ categoriesExpanded: true }, () => { this.setState({ categoriesExpanded: false })});
   }
 
   onClickWord = (word) => {
@@ -102,8 +115,8 @@ class App extends Component {
           <h1 className="text-indigo-900 title-font text-2xl">Art Idea Generator</h1>
         </div>
         <section className="text-gray-600 body-font">
-          <div className="container px-40 py-24 mx-auto">
-            <div className="text-center mb-10">
+          <div className="container px-10 py-24 mx-auto">
+            <div className="text-center mb-5">
               <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd} >
                 <ChosenWords selectedWords={this.state.selectedWords} />
                 <RemoveWordArea isDragging={this.state.isDragging}/>
@@ -111,17 +124,27 @@ class App extends Component {
               <ChangeNumWordsButton diff={-1} changeNumWords={this.changeNumWords}/>
               <ChooseRandomWordsButton numWords={this.state.numWords} onClick={this.chooseRandomWords}/>
               <ChangeNumWordsButton diff={1} changeNumWords={this.changeNumWords}/>
+              <div className="text-base leading-relaxed text-gray-400 pt-4" onClick={this.clearWords}>
+                <button className="select-none focus:outline-none">Clear all</button>
+              </div>
             </div>
-            <div className="text-center">
+            {/* <div className="text-center mb-10">
               <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
-                Choose the number of words you'd like above, and press the button to randomly choose.
-                You can also manually choose any number of words and rearrange them.
+                <b>Choose the number of words</b> you'd like above, and press the button to randomly choose. <br/>
+                You can also: <ul><li>manually choose words</li><li>rearrange words</li><li>drag words into the bin</li></ul>
               </p>
+            </div> */}
+            <HelpText />
+            <div className="text-base leading-relaxed text-gray-400">
+              <button className="select-none focus:outline-none px-2" onClick={this.collapseCategories}>Collapse all</button>
+              <button className="select-none focus:outline-none px-2" onClick={this.expandCategories}>Expand all</button>
             </div>
-            <div className="container flex flex-wrap m-4 mx-auto text-center items-center justify-center">
+            <div className="container flex flex-wrap m-4 mx-auto text-center items-left justify-left">
               { 
                 Object.keys(wordsData).map((category) => {
-                  return <Category key={`category-${category}`} category={category} words={wordsData[category]} onClickWord={this.onClickWord} selectedWords={this.state.selectedWords}/>
+                  return <Category key={`category-${category}`} category={category} words={wordsData[category]}
+                                   onClickWord={this.onClickWord} selectedWords={this.state.selectedWords}
+                                   collapse={this.state.categoriesCollapsed} expand={this.state.categoriesExpanded} />
                 }) 
               }
             </div>

@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/art-idea-generator/static/css/main.8648afae.chunk.css",
-    "main.js": "/art-idea-generator/static/js/main.e85e5ed1.chunk.js",
-    "main.js.map": "/art-idea-generator/static/js/main.e85e5ed1.chunk.js.map",
+    "main.css": "/art-idea-generator/static/css/main.28d09964.chunk.css",
+    "main.js": "/art-idea-generator/static/js/main.c1d3f3d9.chunk.js",
+    "main.js.map": "/art-idea-generator/static/js/main.c1d3f3d9.chunk.js.map",
     "runtime-main.js": "/art-idea-generator/static/js/runtime-main.18f5f00e.js",
     "runtime-main.js.map": "/art-idea-generator/static/js/runtime-main.18f5f00e.js.map",
     "static/js/2.f6067872.chunk.js": "/art-idea-generator/static/js/2.f6067872.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.e7f013a6.chunk.js": "/art-idea-generator/static/js/3.e7f013a6.chunk.js",
     "static/js/3.e7f013a6.chunk.js.map": "/art-idea-generator/static/js/3.e7f013a6.chunk.js.map",
     "index.html": "/art-idea-generator/index.html",
-    "static/css/main.8648afae.chunk.css.map": "/art-idea-generator/static/css/main.8648afae.chunk.css.map",
+    "static/css/main.28d09964.chunk.css.map": "/art-idea-generator/static/css/main.28d09964.chunk.css.map",
     "static/js/2.f6067872.chunk.js.LICENSE.txt": "/art-idea-generator/static/js/2.f6067872.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.18f5f00e.js",
     "static/js/2.f6067872.chunk.js",
-    "static/css/main.8648afae.chunk.css",
-    "static/js/main.e85e5ed1.chunk.js"
+    "static/css/main.28d09964.chunk.css",
+    "static/js/main.c1d3f3d9.chunk.js"
   ]
 }

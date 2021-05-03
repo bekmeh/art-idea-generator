@@ -137,7 +137,7 @@ class App extends Component {
                   <p className="px-2">Clear</p>
                 </button>
               </div>
-              <div className="border-double border-4 border-indigo-200 rounded-md p-3 mt-6 lg:mx-64 sm:mx-24 mx-12">
+              <div className="border-double border-4 border-indigo-200 rounded-md p-3 mt-6 xl:mx-96 lg:mx-64 sm:mx-24 mx-12">
                 <p className="">Choose the number of words you'd like, and press the button to randomly choose. You can also manually choose words, rearrange and delete them</p>
               </div>
             </div>

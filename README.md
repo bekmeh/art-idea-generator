@@ -1,6 +1,6 @@
 # Art Idea Generator
 
-This is a project to generate a custom number of words to use for an art idea. [Check the demo](bekmeh.github.io/art-idea-generator/) to try it out!
+This is a project to generate a custom number of words to use for an art idea. [Check the demo](https://bekmeh.github.io/art-idea-generator/) to try it out!
 
 ![screencapture_1](https://user-images.githubusercontent.com/25033265/190707119-2e92f5b7-18c6-47ea-a4d2-816df478ae57.png)
 
